@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://172.25.76.229:5432/travel
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/realm-demo
+          jwk-set-uri: http://localhost:8080/realms/realm-demo/protocol/openid-connect/certs
+
+keycloak:
+  realm: realm-demo
+  auth-server-url: http://localhost:8080
+  resource: demo
+  public-client: true
+  bearer-only: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+jwt:
+  auth:
+    converter:
+      resource-id: demo
+      principal-attribute: preferred_username
+
+server:
+  port: 8081
